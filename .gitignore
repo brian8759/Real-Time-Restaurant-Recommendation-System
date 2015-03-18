@@ -26,3 +26,9 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+data.json
+yelp_academic_dataset_business.json
+
+local.0
+local.ns
