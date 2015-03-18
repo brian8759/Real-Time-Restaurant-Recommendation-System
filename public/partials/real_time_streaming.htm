@@ -1,0 +1,152 @@
+<section>
+	<style type="text/css">
+	h1, h2, h3, h4, h5, h6{
+	 	font-family: 'Varela Round', sans-serif;
+	}
+	#geo_canvas {
+        height: 550px;
+	    width: 700px;
+	    margin: 10px;
+	    position: relative;
+	}
+    .angular-google-map-container {
+	    position: absolute;
+	    top: 0;
+	    bottom: 0;
+	    right: 0;
+	    left: 0;
+	}
+
+	</style>
+    <br>
+
+	<div class="row">
+        <div>
+            <form class="col-md-8" role="form" ng-submit="sendKeyWord()" autocomplete="on">
+
+              <label class="form-group"> Category by:
+                    <select ng-model="Rstyle">
+                        <option value="1"> Thai </option>
+                        <option value="2"> Chinese </option>
+                        <option value="3"> Italian </option>
+                        <option value="4"> French </option>
+                        <option value="5"> American </option>
+                    </select>
+              </label>
+
+              <label class="form-group"> Popularity by:
+                    <select ng-model="Rreviews">
+                        <option value="50"> 1 </option>
+                        <option value="150"> 2 </option>
+                        <option value="250"> 3 </option>
+                        <option value="350"> 4 </option>
+                    </select>
+              </label>
+            
+              
+              <button class="col-md-offset-1 btn btn-primary" type="submit">Send Key Word</button>
+              
+            </form>
+        </div>
+
+        <div class="col-md-offset-1 col-md-2">
+            <button type="button" class="btn btn-primary" ng-click="cleanMarkers()"> Clear Markers</button>
+        </div>
+  	</div>
+    
+    <br>
+    <div>
+        <img src="/images/restaurant1.png"> $ 
+        </img>
+        <img src="/images/restaurant2.png"> $$ 
+        </img>
+        <img src="/images/restaurant3.png"> $$$ 
+        </img>
+        <img src="/images/restaurant4.png"> $$$$ 
+        </img>
+    </div>
+	<div class="row">
+        
+            <div class="col-md-7">
+            	<div id="geo_canvas">
+    				<ui-gmap-google-map center="map.center" zoom="map.zoom" dragging="map.dragging" bounds="map.bounds" events="map.events" options="map.options" pan="true" control="map.control">
+
+                    <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events">
+                    </ui-gmap-search-box>
+        				<ui-gmap-markers models="map.markers" icon="'icon'" coords="'geometry'" click="'onClick'" control="map.markersControl" fit="true">
+        					<ui-gmap-windows show="'show'">
+                				<div ng-non-bindable>
+                                    {{name}}<br>
+                                    {{fulladdress}}<br>
+                                    Number of Reviews: {{review_count}}
+                                </div>
+            				</ui-gmap-windows>
+        				</ui-gmap-markers>
+    				</ui-gmap-google-map>
+   			 	</div>
+            </div>  
+            
+            <div class="col-md-5">
+                <!--
+                <div ng-model="distance">
+                    <p>Total Distance: <span ng-bind="distance"></span> </p>
+                </div>
+                <div ng-model="duration">
+                    <p>Current Travel Time: <span ng-bind="duration"></span> </p>
+                </div>
+                -->
+                
+                <label class="form-group"> Sort by:
+                    <select ng-model="sortingOrder">
+                        <option value="expense"> expense </option>
+                        <option value="distance"> distance </option>
+                        <option value="time"> travel time </option>
+                        <option value="stars"> rating stars </option>
+                    </select>
+                </label>
+                <label class="form-group">
+                    <input type="radio" ng-model="direction" name="direction" checked>
+                    ascending
+                </label>
+                <label class="form-group">
+                    <input type="radio" ng-model="direction" name="direction" value="reverse">
+                    descending
+                </label>
+
+                    <div ng-switch on="data.length">
+                        <ul ng-switch-when="0">
+                            <li><em> There are no tweets in the DB right now.</em></li>
+                        </ul>
+                        <table class="table table-bordered table-hover" ng-switch-default>
+                            <thead>
+                                <tr>
+                                    <th>Res Name</th>
+                                    <th>Rating</th>
+                                    <th>Travel Time</th>
+                                    <th>Expense</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="detailData in data |orderBy: sortingOrder: direction" ng-click="toGo(detailData)">
+                                    <td>
+                                        {{detailData.name}}
+                                    </td>
+                                    <td>
+                                         {{detailData.stars}}
+                                    </td>
+                                    <td>
+                                         {{detailData.duration}}
+                                    </td>
+                                    <td>
+                                         {{detailData.expense}}
+                                    </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+            </div>    
+                
+    </div>
+</section>		
